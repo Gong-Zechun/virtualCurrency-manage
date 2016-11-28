@@ -1,2 +1,6 @@
 out
 .idea
+*.class
+classes
+src/main/webapp/WEB-INF/classes/production/virtualCurrency-manage/com/coin/controller/CoinPriceController.class
+*.class

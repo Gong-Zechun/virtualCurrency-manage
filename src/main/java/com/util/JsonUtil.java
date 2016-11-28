@@ -9,12 +9,12 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Json处理工具类
  * @author AllenGong
  * @version V1.0
  * @date 2016-10-19 16:44
  */
 public class JsonUtil {
-    private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     public static final ObjectMapper JSON_MAPPER_NOTNULL = new ObjectMapper();
 
     static {
@@ -54,9 +54,9 @@ public class JsonUtil {
     }
 
     /**
-     * json字符串转为map
+     * json字符串转为Map<String, Map<String, String>>
      * @param content 传入的json字符串
-     * @return 返回类型：Map<String, Map<String, String>>
+     * @return
      */
     public static Map<String, Map<String, String>> json2Map(String content) {
         try {

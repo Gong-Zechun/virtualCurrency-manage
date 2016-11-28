@@ -78,12 +78,13 @@ public class CoinPriceService implements ICoinPriceService{
     }
 
     /**
-     * 返回cName和properties文件中的key所组成了Map（用于填充页面的input标签）
+     * 返回cName和properties文件中的key所组成了Map
+     * （用于填充页面的input标签，cName是给人看的，properties文件中的key是给机器用的）
      * @return
      * @throws IOException
      */
     @Override
-    public Map<String, String> queryFrom3Party() throws IOException {
+    public Map<String, String> fillInputTag() throws IOException {
         Map<String, String> propMap = PropertiesReaderUtil.prop2Map("coinDataSource.properties");
         String btc123Url = propMap.get("btc123Url");
         Map<String, String> resultMap = new HashMap<>();
@@ -108,7 +109,7 @@ public class CoinPriceService implements ICoinPriceService{
     public static void main(String[] args) {
         try{
             CoinPriceService cps = new CoinPriceService();
-            cps.queryFrom3Party();
+            cps.fillInputTag();
         }catch (IOException e) {
             e.printStackTrace();
         }

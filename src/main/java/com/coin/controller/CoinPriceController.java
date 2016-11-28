@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,13 +29,16 @@ public class CoinPriceController {
 
     @RequestMapping("price")
     public String index(Model model) {
+        log.info("gzc进入price方法");
         try{
-            model.addAttribute("inputParam", JsonUtil.toJSon(coinPriceService.queryFrom3Party()));
+            model.addAttribute("inputParam", JsonUtil.toJSon(coinPriceService.fillInputTag()));
+            log.info("gzc取值：" + JsonUtil.toJSon(coinPriceService.fillInputTag()));
             return "coin/coinManage";
         }catch(Exception e) {
             e.printStackTrace();
             log.error(e.getMessage(), e);
         }
+        log.info("gzc离开price方法");
         return null;
     }
 

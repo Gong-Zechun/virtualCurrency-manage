@@ -19,5 +19,5 @@ public interface ICoinPriceService{
      */
     List<String> queryFrom3Party(String coinDataParam) throws IOException;
 
-    Map<String, String> queryFrom3Party() throws IOException;
+    Map<String, String> fillInputTag() throws IOException;
 }
