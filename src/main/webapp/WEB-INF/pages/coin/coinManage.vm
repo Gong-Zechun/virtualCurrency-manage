@@ -196,7 +196,7 @@
         clearInterval(timer);
         $("#userInfoTable tbody").html("");
         var value = "";
-        //trNum:table的行数
+        //trNum:table的行数; value：传给ajax的参数
         var trNum = 0;
         for (var i = 0; i < $("input[name='coinSource']").length; i++) {
             if ($("input[name='coinSource']")[i].checked) { //判断复选框是否选中
@@ -210,9 +210,10 @@
         /**
          * 动态生成tr和td标签
          */
-        //目前需要展示的行数未trNum,列数为tdNum（13）
+        //目前需要初始化的行数为trNum,列数为tdNum（13）
         var tdNum = 13;
         var trTdTag = "";
+        //拼装空的tr、td标签
         if(trNum > 0) {
             for(var trIndex = 0; trIndex < trNum; trIndex++) {
                 trTdTag = trTdTag + "<tr>";
@@ -226,13 +227,13 @@
 
         //加载数据--做个非空判断，免得后台报空指针异常
         if(value != null && value != "") {
-            console.log(value);
             getCoinInfo(value);
+            //接口三秒返回一次数据，所以这里的定时器也设置为3秒
             timer = setInterval(function() { getCoinInfo(value); }, 3000);
         }
     }
 
-    //为table加载数据
+    //在table的空的td标签中填入数据
     function getCoinInfo(value) {
         $.ajax({
             type: "POST",
@@ -256,168 +257,129 @@
                                 break;
                             case 1:
                                 if(tempIdValue != null && tempIdValue != "") {
-                                    if(tempIdValue < temp['datas']['ticker']['last']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    }else if(tempIdValue > temp['datas']['ticker']['last']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    }else{
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['last']);
                                 }
                                 tempTd.html('￥' + temp['datas']['ticker']['last']);
                                 break;
                             case 2:
                                 if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['dollar']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['dollar']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['dollar']);
                                 }
                                 tempTd.html('$' + temp['datas']['ticker']['dollar']);
                                 break;
                             case 3:
                                 if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['high']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['high']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['high']);
                                 }
                                 tempTd.html('￥' + temp['datas']['ticker']['high']);
                                 break;
                             case 4:
                                 if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['highdollar']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['highdollar']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['highdollar']);
                                 }
                                 tempTd.html('$' + temp['datas']['ticker']['highdollar']);
                                 break;
                             case 5:
                                 if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['low']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['low']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['low']);
                                 }
                                 tempTd.html('￥' + temp['datas']['ticker']['low']);
                                 break;
                             case 6:
-                                if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['lowdollar']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['lowdollar']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
-                                }
+//                                if(tempIdValue != null && tempIdValue != "") {
+//                                    if (tempIdValue < temp['datas']['ticker']['lowdollar']) {
+//                                        tempTd.removeClass("green");
+//                                        tempTd.addClass("red");
+//                                    } else if (tempIdValue > temp['datas']['ticker']['lowdollar']) {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.addClass("green");
+//                                    } else {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.removeClass("green");
+//                                    }
+//                                }
+                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['lowdollar']);
                                 tempTd.html('$' + temp['datas']['ticker']['lowdollar']);
                                 break;
                             case 7:
-                                if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['buy']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['buy']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
-                                }
+//                                if(tempIdValue != null && tempIdValue != "") {
+//                                    if (tempIdValue < temp['datas']['ticker']['buy']) {
+//                                        tempTd.removeClass("green");
+//                                        tempTd.addClass("red");
+//                                    } else if (tempIdValue > temp['datas']['ticker']['buy']) {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.addClass("green");
+//                                    } else {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.removeClass("green");
+//                                    }
+//                                }
+                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['buy']);
                                 tempTd.html('￥' + temp['datas']['ticker']['buy']);
                                 break;
                             case 8:
-                                if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['buydollar']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['buydollar']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
-                                }
+//                                if(tempIdValue != null && tempIdValue != "") {
+//                                    if (tempIdValue < temp['datas']['ticker']['buydollar']) {
+//                                        tempTd.removeClass("green");
+//                                        tempTd.addClass("red");
+//                                    } else if (tempIdValue > temp['datas']['ticker']['buydollar']) {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.addClass("green");
+//                                    } else {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.removeClass("green");
+//                                    }
+//                                }
+                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['buydollar']);
                                 tempTd.html('$' + temp['datas']['ticker']['buydollar']);
                                 break;
                             case 9:
-                                if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['sell']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['sell']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
-                                }
+//                                if(tempIdValue != null && tempIdValue != "") {
+//                                    if (tempIdValue < temp['datas']['ticker']['sell']) {
+//                                        tempTd.removeClass("green");
+//                                        tempTd.addClass("red");
+//                                    } else if (tempIdValue > temp['datas']['ticker']['sell']) {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.addClass("green");
+//                                    } else {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.removeClass("green");
+//                                    }
+//                                }
+                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['sell']);
                                 tempTd.html('￥' + temp['datas']['ticker']['sell']);
                                 break;
                             case 10:
-                                if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['selldollar']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['selldollar']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
-                                }
+//                                if(tempIdValue != null && tempIdValue != "") {
+//                                    if (tempIdValue < temp['datas']['ticker']['selldollar']) {
+//                                        tempTd.removeClass("green");
+//                                        tempTd.addClass("red");
+//                                    } else if (tempIdValue > temp['datas']['ticker']['selldollar']) {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.addClass("green");
+//                                    } else {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.removeClass("green");
+//                                    }
+//                                }
+                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['selldollar']);
                                 tempTd.html('$' + temp['datas']['ticker']['selldollar']);
                                 break;
                             case 11:
                                 tempIdValue = tempTd.html().substring(0, tempTd.html().length);
-                                if(tempIdValue != null && tempIdValue != "") {
-                                    if (tempIdValue < temp['datas']['ticker']['vol']) {
-                                        tempTd.removeClass("green");
-                                        tempTd.addClass("red");
-                                    } else if (tempIdValue > temp['datas']['ticker']['vol']) {
-                                        tempTd.removeClass("red");
-                                        tempTd.addClass("green");
-                                    } else {
-                                        tempTd.removeClass("red");
-                                        tempTd.removeClass("green");
-                                    }
-                                }
+//                                if(tempIdValue != null && tempIdValue != "") {
+//                                    if (tempIdValue < temp['datas']['ticker']['vol']) {
+//                                        tempTd.removeClass("green");
+//                                        tempTd.addClass("red");
+//                                    } else if (tempIdValue > temp['datas']['ticker']['vol']) {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.addClass("green");
+//                                    } else {
+//                                        tempTd.removeClass("red");
+//                                        tempTd.removeClass("green");
+//                                    }
+//                                }
+                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['vol']);
                                 tempTd.html(temp['datas']['ticker']['vol']);
                                 break;
                             case 12:
@@ -443,6 +405,19 @@
             increaseArea : '22%'
         });
     });
+
+    function changeColor(td, orignalData, curData) {
+        if (orignalData < curData) {
+            td.removeClass("green");
+            td.addClass("red");
+        } else if (orignalData > curData) {
+            td.removeClass("red");
+            td.addClass("green");
+        } else {
+            td.removeClass("red");
+            td.removeClass("green");
+        }
+    }
 
     $(function() {
         var inputParamJson = $!inputParam;

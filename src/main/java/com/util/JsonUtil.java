@@ -25,17 +25,11 @@ public class JsonUtil {
     }
 
     /**
-     * 把JavaBean转换为json字符串
-     *      普通对象转换：toJson(Student)
-     *      List转换：toJson(List)
-     *      Map转换:toJson(Map)
-     * 我们发现不管什么类型，都可以直接传入这个方法
-     *
-     * @param object
-     *            JavaBean对象
+     * 将JavaBean转换为json字符串
+     * @param object JavaBean对象（可以为普通对象、List或者Map）
      * @return json字符串
      */
-    public static String toJSon(Object object) {
+    public static String toJsonStr(Object object) {
         try {
             return JSON_MAPPER_NOTNULL.writeValueAsString(object);
         } catch (Exception e) {

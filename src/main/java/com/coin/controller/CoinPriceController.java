@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,8 +30,8 @@ public class CoinPriceController {
     public String index(Model model) {
         log.info("gzc进入price方法");
         try{
-            model.addAttribute("inputParam", JsonUtil.toJSon(coinPriceService.fillInputTag()));
-            log.info("gzc取值：" + JsonUtil.toJSon(coinPriceService.fillInputTag()));
+            model.addAttribute("inputParam", JsonUtil.toJsonStr(coinPriceService.fillInputTag()));
+            log.info("gzc取值：" + JsonUtil.toJsonStr(coinPriceService.fillInputTag()));
             return "coin/coinManage";
         }catch(Exception e) {
             e.printStackTrace();
@@ -47,7 +46,7 @@ public class CoinPriceController {
     public String getData(String coinDataParam) {
         try{
             List<String> resultList = coinPriceService.queryFrom3Party(coinDataParam);
-            String result = JsonUtil.toJSon(resultList);
+            String result = JsonUtil.toJsonStr(resultList);
             return result;
         }catch(IOException e) {
             e.printStackTrace();
@@ -57,5 +56,10 @@ public class CoinPriceController {
             log.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    @RequestMapping("once")
+    public String once() {
+        return "coin/once";
     }
 }
