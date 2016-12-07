@@ -4,6 +4,7 @@ import com.coin.service.ICoinPriceService;
 import com.common.HttpRequest;
 import com.util.JsonUtil;
 import com.util.PropertiesReaderUtil;
+import com.util.StringUtil;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -100,6 +101,9 @@ public class CoinPriceService implements ICoinPriceService{
                 String resultStr = queryFrom3Party(btc123Url, val);
                 Map<String, Map<String, String>> tempMap = JsonUtil.json2Map(resultStr);
                 String cName = tempMap.get("datas").get("cName");
+				if(StringUtil.isEmpty(cName)) {
+                    continue;
+                }
                 resultMap.put(cName, key);
             }
         }

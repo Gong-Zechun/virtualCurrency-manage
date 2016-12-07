@@ -58,6 +58,13 @@
             /*width: 100px;*/
             /*height: 100px;*/
         /*}*/
+        .clock {
+            font-size: 34px;
+        }
+
+        hr {
+            margin-top: 0px;
+        }
     </style>
 </head>
 
@@ -83,9 +90,9 @@
 </section><!-- end of secondary bar -->
 
 <aside id="sidebar" class="column">
-    <form class="quick_search">
-        <input type="text" value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
-    </form>
+    <span class="clock">
+##        时间
+    </span>
     <hr/>
     <h3>比特币</h3>
     <ul class="toggle">
@@ -105,19 +112,14 @@
 
     <article class="module width_3_quarter datasource_checkbox">
         请选择数据来源!
-##        <label><input name="coinSource" type="checkbox" value="0" />BTCC</label>
-##        <label><input name="coinSource" type="checkbox" value="1" />火币网</label>
-##        <label><input name="coinSource" type="checkbox" value="2" />OKCoin币行</label>
-##        <label><input name="coinSource" type="checkbox" value="3" />中国比特币</label>
-##        <label><input name="coinSource" type="checkbox" value="4" />Coinbase</label>
-##        <label><input name="coinSource" type="checkbox" value="5" />Bitfinex</label>
 
 ##        <br/><a type="button" onclick="initTable()" style="cursor:pointer">查询</a>
     </article>
 
 
     <article class="module width_3_quarter">
-        <header><h3 class="tabs_involved">比特币价格走势</h3>
+        <header>
+	    <h3 class="tabs_involved">比特币价格走势</h3>
             <ul class="tabs">
                 <li><a href="#tab1">Posts</a></li>
                 <li><a href="#tab2">Comments</a></li>
@@ -239,12 +241,11 @@
             type: "POST",
             url: "/coin/data",
             dataType: "json",
-            async: false,
+            //async: false,
             data: {
                 "coinDataParam" : value,
             },
             success: function(data) {
-                console.log(data);
                 for(var i in data) {
                     //将json字符串转为json（对象）
                     var temp = JSON.parse(data[i]);
@@ -286,100 +287,40 @@
                                 tempTd.html('￥' + temp['datas']['ticker']['low']);
                                 break;
                             case 6:
-//                                if(tempIdValue != null && tempIdValue != "") {
-//                                    if (tempIdValue < temp['datas']['ticker']['lowdollar']) {
-//                                        tempTd.removeClass("green");
-//                                        tempTd.addClass("red");
-//                                    } else if (tempIdValue > temp['datas']['ticker']['lowdollar']) {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.addClass("green");
-//                                    } else {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.removeClass("green");
-//                                    }
-//                                }
-                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['lowdollar']);
+                                if(tempIdValue != null && tempIdValue != "") {
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['lowdollar']);
+                                }
                                 tempTd.html('$' + temp['datas']['ticker']['lowdollar']);
                                 break;
                             case 7:
-//                                if(tempIdValue != null && tempIdValue != "") {
-//                                    if (tempIdValue < temp['datas']['ticker']['buy']) {
-//                                        tempTd.removeClass("green");
-//                                        tempTd.addClass("red");
-//                                    } else if (tempIdValue > temp['datas']['ticker']['buy']) {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.addClass("green");
-//                                    } else {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.removeClass("green");
-//                                    }
-//                                }
-                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['buy']);
+                                if(tempIdValue != null && tempIdValue != "") {
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['buy']);
+                                }
                                 tempTd.html('￥' + temp['datas']['ticker']['buy']);
                                 break;
                             case 8:
-//                                if(tempIdValue != null && tempIdValue != "") {
-//                                    if (tempIdValue < temp['datas']['ticker']['buydollar']) {
-//                                        tempTd.removeClass("green");
-//                                        tempTd.addClass("red");
-//                                    } else if (tempIdValue > temp['datas']['ticker']['buydollar']) {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.addClass("green");
-//                                    } else {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.removeClass("green");
-//                                    }
-//                                }
-                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['buydollar']);
+                                if(tempIdValue != null && tempIdValue != "") {
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['buydollar']);
+                                }
                                 tempTd.html('$' + temp['datas']['ticker']['buydollar']);
                                 break;
                             case 9:
-//                                if(tempIdValue != null && tempIdValue != "") {
-//                                    if (tempIdValue < temp['datas']['ticker']['sell']) {
-//                                        tempTd.removeClass("green");
-//                                        tempTd.addClass("red");
-//                                    } else if (tempIdValue > temp['datas']['ticker']['sell']) {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.addClass("green");
-//                                    } else {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.removeClass("green");
-//                                    }
-//                                }
-                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['sell']);
+                                if(tempIdValue != null && tempIdValue != "") {
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['sell']);
+                                }
                                 tempTd.html('￥' + temp['datas']['ticker']['sell']);
                                 break;
                             case 10:
-//                                if(tempIdValue != null && tempIdValue != "") {
-//                                    if (tempIdValue < temp['datas']['ticker']['selldollar']) {
-//                                        tempTd.removeClass("green");
-//                                        tempTd.addClass("red");
-//                                    } else if (tempIdValue > temp['datas']['ticker']['selldollar']) {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.addClass("green");
-//                                    } else {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.removeClass("green");
-//                                    }
-//                                }
-                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['selldollar']);
+                                if(tempIdValue != null && tempIdValue != "") {
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['selldollar']);
+                                }
                                 tempTd.html('$' + temp['datas']['ticker']['selldollar']);
                                 break;
                             case 11:
                                 tempIdValue = tempTd.html().substring(0, tempTd.html().length);
-//                                if(tempIdValue != null && tempIdValue != "") {
-//                                    if (tempIdValue < temp['datas']['ticker']['vol']) {
-//                                        tempTd.removeClass("green");
-//                                        tempTd.addClass("red");
-//                                    } else if (tempIdValue > temp['datas']['ticker']['vol']) {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.addClass("green");
-//                                    } else {
-//                                        tempTd.removeClass("red");
-//                                        tempTd.removeClass("green");
-//                                    }
-//                                }
-                                changeColor(tempTd, tempIdValue, temp['datas']['ticker']['vol']);
+                                if(tempIdValue != null && tempIdValue != "") {
+                                    changeColor(tempTd, tempIdValue, temp['datas']['ticker']['vol']);
+                                }
                                 tempTd.html(temp['datas']['ticker']['vol']);
                                 break;
                             case 12:
@@ -406,6 +347,12 @@
         });
     });
 
+    /**
+     * 单元格红绿色样式转变
+     * @param td 要转变样式的td
+     * @param orignalData 原始数据
+     * @param curData 当前数据
+     */
     function changeColor(td, orignalData, curData) {
         if (orignalData < curData) {
             td.removeClass("green");
@@ -419,7 +366,19 @@
         }
     }
 
-    $(function() {
+     $(function() {
+        fillCheckbox();
+
+         setInterval(function() {
+             var timeTag = getSystemTime();
+             console.log(timeTag);
+             $("#sidebar .clock").html("");
+             $("#sidebar .clock").append(timeTag);
+         }, 1000);
+    });
+
+    //填充选择框：
+    function fillCheckbox() {
         var inputParamJson = $!inputParam;
         var inputHtml = "<br/>";
         for(var cName in inputParamJson) {
@@ -427,7 +386,28 @@
         }
         inputHtml = inputHtml + "<br/><a type='button' onclick='initTable()' style='cursor:pointer'>查询</a>";
         $(".datasource_checkbox").append(inputHtml);
-    });
+    }
+
+    var timeTag;
+    function getSystemTime() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = addZero(date.getMinutes());
+        var second = addZero(date.getSeconds());
+        return timeTag = year + '年' + month + '月' + day + '日 ' + hour + ':' + minute + ':' + second;
+    };
+
+    //个位补零
+    function addZero(param) {
+        if(parseInt(param) < 10) {
+            return "0" + param;
+        }else{
+            return param;
+        }
+    }
 </script>
 </body>
 </html>

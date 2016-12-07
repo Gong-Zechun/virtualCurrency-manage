@@ -14,8 +14,7 @@ li{ list-style: none; }
 #bg_01{background:url('../image/02.jpg'); background-size: cover;}
 #bg_02{background:url('../image/03.jpg'); background-size: cover;}
 #bg_03{background:url('../image/06.jpg'); background-size: cover;}
-#header{ /*background-color: #f9f9f9;*/ height: 108px; border-bottom: #c9c9c9 2px solid; position: relative; z-index: 10; background:url('../image/nav_bg.png'); background-repeat: repeat;}
-#header_logo{width: 206px; height: 65px; position: absolute; top: 24px; left: 2px; background-image: url('../image/index_logo.png');}
+#header{ /*background-color: #f9f9f9;*/ height: 108px; position: relative; z-index: 10;}
 #header_nav{position: absolute; top: 40px; width: 100%;}
 #header_menu_list{width: auto; height: 68px; margin-left: 208px; margin-bottom: 0;}
 .header_menu_list{width: 12%; height: 68px; float: left; line-height: 68px; text-align: center; font-size: 18px; color: #8e8e8e; position: relative;}

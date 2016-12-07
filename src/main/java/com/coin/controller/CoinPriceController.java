@@ -58,8 +58,17 @@ public class CoinPriceController {
         return null;
     }
 
-    @RequestMapping("once")
-    public String once() {
-        return "coin/once";
+    @RequestMapping("login")
+    public String toLogin() {
+        if("1".equals("1")) {
+            return "coin/coinManage";
+        }
+        return null;
+    }
+
+    @RequestMapping("validate")
+    @ResponseBody
+    public String validateUser() {
+        return JsonUtil.toJsonStr("1");
     }
 }
