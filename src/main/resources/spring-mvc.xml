@@ -82,13 +82,13 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- 异常 -->
-    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="exceptionMappings">
-            <props>
-                <!--登录失败异常类-->
-                <prop key="com.petro.UnLoginException">redirect:/login</prop>
-            </props>
-        </property>
-    </bean>
+    <!--&lt;!&ndash; 异常 &ndash;&gt;-->
+    <!--<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+        <!--<property name="exceptionMappings">-->
+            <!--<props>-->
+                <!--&lt;!&ndash;登录失败异常类&ndash;&gt;-->
+                <!--<prop key="com.petro.UnLoginException">redirect:/login</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
 </beans>

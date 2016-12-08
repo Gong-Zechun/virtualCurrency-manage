@@ -1,16 +1,21 @@
 package com.coin.controller;
 
+import com.coin.pojo.Customer;
 import com.coin.service.ICoinPriceService;
 import com.util.JsonUtil;
+import com.util.encrypt.Md5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -27,17 +32,15 @@ public class CoinPriceController {
     private ICoinPriceService coinPriceService;
 
     @RequestMapping("price")
-    public String index(Model model) {
-        log.info("gzc进入price方法");
+    @ResponseBody
+    public String price() {
         try{
-            model.addAttribute("inputParam", JsonUtil.toJsonStr(coinPriceService.fillInputTag()));
-            log.info("gzc取值：" + JsonUtil.toJsonStr(coinPriceService.fillInputTag()));
-            return "coin/coinManage";
+            String result = JsonUtil.toJsonStr(coinPriceService.fillInputTag());
+            return result;
         }catch(Exception e) {
             e.printStackTrace();
             log.error(e.getMessage(), e);
         }
-        log.info("gzc离开price方法");
         return null;
     }
 
@@ -59,16 +62,21 @@ public class CoinPriceController {
     }
 
     @RequestMapping("login")
-    public String toLogin() {
-        if("1".equals("1")) {
-            return "coin/coinManage";
-        }
-        return null;
+    public String login() {
+        return "coin/login";
     }
 
-    @RequestMapping("validate")
-    @ResponseBody
-    public String validateUser() {
-        return JsonUtil.toJsonStr("1");
+    @RequestMapping("main")
+    public String toCoinManage(@RequestParam("userName") String userName, @RequestParam("password") String password) {
+        try {
+            if(coinPriceService.isLeagalLogin(userName, password)) {
+                return "coin/coinManage";
+            }else{
+                return "coin/login";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

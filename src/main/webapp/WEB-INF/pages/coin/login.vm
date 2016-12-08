@@ -57,13 +57,13 @@
 </div>
 
 
-<div class="login">
+<form class="login" method="post" action="/coin/main">
     <p class="title">登录</p>
-    <input id="userName" type="text" placeholder="请输入用户名">
+    <input name="userName" type="text" placeholder="请输入用户名">
     <br>
-    <input id="password" type="text"  placeholder="请输入密码"/ class="psword">
-    <button id="login" type="button" class="btn btn-danger btn-block" style="margin-top:40px;">登录</button>
-</div>
+    <input name="password" type="text"  placeholder="请输入密码"/ class="psword">
+    <button id="loginBtn" type="button" class="btn btn-danger btn-block" style="margin-top:40px;">登录</button>
+</form>
 
 <script src="/scripts/js/common.js" type="text/javascript"></script>
 <script>
@@ -74,39 +74,41 @@
 
     })
 
-    $("#login").click(function() {
-        var userName = $("#userName").val();
-        var password = $("#password").val();
-        console.log(userName);
-        console.log(password);
-        if(userName != "" && password != "") {
-            $.ajax({
-                type: "POST",
-                url: "/coin/validate",
-                dataType: "json",
-                async: false,//同步
-                data: {
-                    "userName": userName,
-                    "password": password
-                },
-                success: function(data) {
-                    console.log(data);
-                    if(parseInt(data) == 1) {
-                        window.location.href="/coin/price";
-                    }else{
-                        //这里可以针对“没有此用户”或者“密码错误”两种情况做区分
-                        alert("登录失败，没有此用户或者密码错误");
-                    }
-                },
-                error: function(e) { //服务器响应失败处理函数
-                    alert("error!!!");
-                    console.log(e);
-                }
-            });
+    $("#loginBtn").click(function() {
+        $(".login").submit();
 
-        }else{
-            alert("请输入用户名和密码！");
-        }
+//        var userName = $("#userName").val();
+//        var password = $("#password").val();
+//        console.log(userName);
+//        console.log(password);
+//        if(userName != "" && password != "") {
+//            $.ajax({
+//                type: "POST",
+//                url: "/coin/validate",
+//                dataType: "json",
+//                async: false,//同步
+//                data: {
+//                    "userName": userName,
+//                    "password": password
+//                },
+//                success: function(data) {
+//                    console.log(data);
+//                    if(parseInt(data) == 1) {
+//                        window.location.href="/coin/price";
+//                    }else{
+//                        //这里可以针对“没有此用户”或者“密码错误”两种情况做区分
+//                        alert("登录失败，没有此用户或者密码错误");
+//                    }
+//                },
+//                error: function(e) { //服务器响应失败处理函数
+//                    alert("error!!!");
+//                    console.log(e);
+//                }
+//            });
+//
+//        }else{
+//            alert("请输入用户名和密码！");
+//        }
 
     });
 

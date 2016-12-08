@@ -367,26 +367,46 @@
     }
 
      $(function() {
-        fillCheckbox();
+         $.ajax({
+                type: "POST",
+                url: "/coin/price",
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    if(data != null && data != "") {
+                        var inputParamJson = data;
+                        var inputHtml = "<br/>";
+                        for(var cName in inputParamJson) {
+                            inputHtml = inputHtml + "<label><input name='coinSource' type='checkbox' value='" + $.trim(inputParamJson[cName]) + "'/>" + $.trim(cName) + "</label>&nbsp;&nbsp;&nbsp;&nbsp;";
+                        }
+                        inputHtml = inputHtml + "<br/><a type='button' onclick='initTable()' style='cursor:pointer'>查询</a>";
+                        $(".datasource_checkbox").append(inputHtml);
+                    }
+                },
+                error: function(e) { //服务器响应失败处理函数
+                    alert("error!!!");
+                    console.log(e);
+                }
+            });
+
 
          setInterval(function() {
              var timeTag = getSystemTime();
-             console.log(timeTag);
              $("#sidebar .clock").html("");
              $("#sidebar .clock").append(timeTag);
          }, 1000);
     });
 
     //填充选择框：
-    function fillCheckbox() {
-        var inputParamJson = $!inputParam;
-        var inputHtml = "<br/>";
-        for(var cName in inputParamJson) {
-            inputHtml = inputHtml + "<label><input name='coinSource' type='checkbox' value='" + $.trim(inputParamJson[cName]) + "'/>" + $.trim(cName) + "</label>&nbsp;&nbsp;&nbsp;&nbsp;";
-        }
-        inputHtml = inputHtml + "<br/><a type='button' onclick='initTable()' style='cursor:pointer'>查询</a>";
-        $(".datasource_checkbox").append(inputHtml);
-    }
+##    function fillCheckbox() {
+##        var inputParamJson = $!inputParam;
+##        var inputHtml = "<br/>";
+##        for(var cName in inputParamJson) {
+##            inputHtml = inputHtml + "<label><input name='coinSource' type='checkbox' value='" + $.trim(inputParamJson[cName]) + "'/>" + $.trim(cName) + "</label>&nbsp;&nbsp;&nbsp;&nbsp;";
+##        }
+##        inputHtml = inputHtml + "<br/><a type='button' onclick='initTable()' style='cursor:pointer'>查询</a>";
+##        $(".datasource_checkbox").append(inputHtml);
+##    }
 
     var timeTag;
     function getSystemTime() {

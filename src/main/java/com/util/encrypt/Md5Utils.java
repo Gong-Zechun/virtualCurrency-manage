@@ -16,6 +16,10 @@
 package com.util.encrypt;
 
 
+import sun.misc.BASE64Encoder;
+
+import java.security.MessageDigest;
+
 /**
  * 
  * md5 类实现了RSA Data Security, Inc.在提交给IETF 的RFC1321中的MD5 message-digest 算法。
@@ -363,7 +367,16 @@ public class Md5Utils {
 		return md5;
 
 	}
-	
+
+	public static String getMD5Str(String origStr) throws Exception{
+		MessageDigest md =
+				MessageDigest.getInstance("md5");
+		byte[] buf = md.digest(origStr.getBytes());
+		BASE64Encoder encoder =
+				new BASE64Encoder();
+		String str2 = encoder.encode(buf);
+		return str2;
+	}
 	/**
 	 * 测试
 	 * 
@@ -371,8 +384,11 @@ public class Md5Utils {
 	 * jhh
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.out.println(new Md5Utils().getMD5("111111"));
+
+		//System.out.println(getMD5Str("111111"));
+
 		System.out.println(new Md5Utils().getMD5("112111"));
 		System.out.println(new Md5Utils().getMD5("111"));
 		System.out.println(new Md5Utils().getMD5("a"));

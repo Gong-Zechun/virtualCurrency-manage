@@ -1,12 +1,16 @@
 package com.coin.service.impl;
 
+import com.coin.dao.CustomerMapper;
+import com.coin.pojo.Customer;
 import com.coin.service.ICoinPriceService;
 import com.common.HttpRequest;
 import com.util.JsonUtil;
 import com.util.PropertiesReaderUtil;
 import com.util.StringUtil;
+import com.util.encrypt.Md5Utils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.*;
 
@@ -17,18 +21,11 @@ import java.util.*;
  */
 @Service
 public class CoinPriceService implements ICoinPriceService{
+    @Resource
+    private CustomerMapper customerDao;
+
     //前端传过来的参数值对应的url参数名
     public static Map<String, String> propMap = new HashMap<>();
-//    static{
-//        Map<Integer, String> temp = new HashMap<>();
-//        temp.put(0, "btccUrlParam");
-//        temp.put(1, "huobiUrlParam");
-//        temp.put(2, "okcoinUrlParam");
-//        temp.put(3, "chbtcUrlParam");
-//        temp.put(4, "coinbaseUrlParam");
-//        temp.put(5, "bitfinexUrlParam");
-//        dataSourceMap = Collections.unmodifiableMap(temp);
-//    }
 
     /**
      * 接口返回结果集
@@ -108,6 +105,25 @@ public class CoinPriceService implements ICoinPriceService{
             }
         }
         return resultMap;
+    }
+
+    @Override
+    public Customer getCustomerInfo(int id) {
+        return customerDao.selectCustomerById(id);
+    }
+
+    @Override
+    public String getPswByName(String userName) {
+        return customerDao.getPswByName(userName);
+    }
+
+    @Override
+    public boolean isLeagalLogin(String userName, String password) throws Exception {
+        String passwordFromDB = this.getPswByName(userName);
+        if(Md5Utils.getMD5Str(password).equals(passwordFromDB)) {
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) {
